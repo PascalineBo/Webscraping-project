@@ -15,8 +15,8 @@ This code's purpose is to scrape (http://books.toscrape.com)
 `git clone https://github.com/PascalineBo/Webscraping-project.git`</li>
   
   <li> navigate to the folder</li>
-  <li> to run the code:
+  <li> to run the code:  </li>
       `python projet2g.py`
-  </li>
+
   <li>see all the data you scraped in csv output files in your folder </li> 
 (Note: program's run time superates 20 minutes) 
