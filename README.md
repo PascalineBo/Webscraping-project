@@ -8,7 +8,7 @@ This code's purpose is to scrape (http://books.toscrape.com)
 
   <li> to import the repository's file:
 
-`git clone https://github.com/MargueriteEffren/Crispy_App.git`</li>
+`git clone https://github.com/PascalineBo/Webscraping-project.git`</li>
   Put file called "projet2g.py" in a Folder  
 with your terminal, navigate to this folder  
 Once in the Folder, input in your terminal: python3 projet2g.py  
