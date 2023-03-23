@@ -17,4 +17,4 @@ This code's purpose is to scrape (http://books.toscrape.com)
   <li> navigate to the folder</li>
   <li>`python projet2g.py`</>
   <li>see all the data you scraped in csv output files in your folder </li> 
-(Note: program's run time exceeds 20 minutes) 
+(Note: program's run time superates 20 minutes) 
