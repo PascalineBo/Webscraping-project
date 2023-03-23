@@ -16,6 +16,7 @@ This code's purpose is to scrape (http://books.toscrape.com)
   
   <li> navigate to the folder</li>
   <li> to run the code:  </li>
+  
       `python projet2g.py`
 
   <li>see all the data you scraped in csv output files in your folder </li> 
