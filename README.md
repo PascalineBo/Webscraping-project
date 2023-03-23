@@ -10,7 +10,7 @@ This code's purpose is to scrape (http://books.toscrape.com)
 
 ## App's set up:
   <ol>
-  <li> to import the repository's file:
+  <li> to import the repository's files:
 
 `git clone https://github.com/PascalineBo/Webscraping-project.git`</li>
   Put file called "projet2g.py" in a Folder  
