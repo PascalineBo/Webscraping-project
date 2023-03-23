@@ -4,7 +4,8 @@ This code's purpose is to scrape (http://books.toscrape.com)
 ##Requisits: 
 <ol>
   <li> Install Python : if necessary, download **[Python 3.10](https://www.python.org/downloads/)** </li>
-  <li> Install Python Package BeautifulSoup 4: in your terminal, input: pip install beautifulsoup4  </li>
+  <li> Install Python Package BeautifulSoup 4: in your terminal:
+    'pip install beautifulsoup4'  </li>
 
   <li> to import the repository's file:
 
