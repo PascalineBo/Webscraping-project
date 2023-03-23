@@ -1,4 +1,4 @@
-# Web Scraping App
+# Web Scraping progam
 This code's purpose is to scrape (http://books.toscrape.com)
 
 ## Requisits: 
@@ -8,14 +8,14 @@ This code's purpose is to scrape (http://books.toscrape.com)
     `pip install beautifulsoup4`  </li>
   </ol>
 
-## App's set up:
+## Program's set up:
   <ol>
   <li> to import the repository's files:
 
 `git clone https://github.com/PascalineBo/Webscraping-project.git`</li>
   
   <li> navigate to the folder</li>
-  <li>
+  <li> to run the code:
       `python projet2g.py`
   </li>
   <li>see all the data you scraped in csv output files in your folder </li> 
