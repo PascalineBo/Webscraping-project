@@ -1,4 +1,4 @@
-# Projet2
+# Web Scraping App
 Projet 2 d'Openclassrooms Formation Développeuse d'Applications Pyton  
 
 Requisits:  
