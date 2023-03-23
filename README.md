@@ -8,7 +8,7 @@ This code's purpose is to scrape (http://books.toscrape.com)
     `pip install beautifulsoup4`  </li>
   </ol>
 
-## App set up:
+## App's set up:
   <ol>
   <li> to import the repository's file:
 
