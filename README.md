@@ -1,5 +1,5 @@
 # Web Scraping App
-Projet 2 d'Openclassrooms Formation Développeuse d'Applications Pyton  
+This code's purpose is to scrape (http://books.toscrape.com)
 
 Requisits:  
 Install Python : if necessary, download https://www.python.org/downloads/  
