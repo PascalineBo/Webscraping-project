@@ -10,12 +10,13 @@ This code's purpose is to scrape (http://books.toscrape.com)
 
 ## Program's set up:
   <ol>
-  <li> to import the repository's files:
+  <li>import the repository's files:
 
 `git clone https://github.com/PascalineBo/Webscraping-project.git`</li>
   
   <li> navigate to the folder</li>
-  <li> to run the code:
+  <li> run the code:
+    
 `python projet2g.py`
 </li>
   <li>see all the data you scraped in csv output files in your folder </li>
