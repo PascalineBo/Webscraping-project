@@ -13,8 +13,8 @@ This code's purpose is to scrape (http://books.toscrape.com)
   <li> to import the repository's files:
 
 `git clone https://github.com/PascalineBo/Webscraping-project.git`</li>
-  Put file called "projet2g.py" in a Folder  
-with your terminal, navigate to this folder  
-Once in the Folder, input in your terminal: python3 projet2g.py  
-Check the various csv output files in your folder  
-Note: the program run time exceeds 20 minutes  
+  
+  <li> navigate to the folder</li>
+  <li>`python projet2g.py`</>
+  <li>see all the data you scraped in csv output files in your folder </li> 
+(Note: the program run time exceeds 20 minutes) 
