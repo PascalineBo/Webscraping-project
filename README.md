@@ -19,5 +19,6 @@ This code's purpose is to scrape (http://books.toscrape.com)
   
       `python projet2g.py`
 
-  <li>see all the data you scraped in csv output files in your folder </li> 
+  <li>see all the data you scraped in csv output files in your folder </li>
 (Note: program's run time superates 20 minutes) 
+  </ol>
