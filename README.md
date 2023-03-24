@@ -14,7 +14,7 @@ Install Python : download **[Python 3.10](https://www.python.org/downloads/)**
   <li> navigate to the folder:
     
 - `cd Webscraping-project` </li>
-<li> créez votre dossier d'environnement virtuel:
+<li> create your virtual environment folder:
 
 - `mkdir .venv`
 - `pip install pipenv`
@@ -30,7 +30,7 @@ Install Python : download **[Python 3.10](https://www.python.org/downloads/)**
 - `pipenv install soupsieve`
 - `pipenv install urllib3`
     </li>
-<li> activez l'environnement virtuel à l'aide des commandes du terminal:
+<li> activate your virtual environment in your terminal:
     
 - `pipenv shell`
     </li>
