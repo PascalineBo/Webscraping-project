@@ -14,7 +14,7 @@ Install Python : download **[Python 3.10](https://www.python.org/downloads/)**
   <li> navigate to the folder:
     
 - `cd Webscraping-project` </li>
-  <li>créez votre dossier d'environnement virtuel:
+<li> créez votre dossier d'environnement virtuel:
 
 - `mkdir .venv`
 - `pip install pipenv`
