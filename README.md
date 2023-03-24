@@ -32,8 +32,8 @@ Install Python : download **[Python 3.10](https://www.python.org/downloads/)**
     
 - `pipenv shell`
     </li>
- <li> run the code: 
-   - `python projet2g.py`
+<li> run the code: 
+- `python projet2g.py`
 </li>
   <li>see all the data you scraped in csv output files in your folder </li>
 (Note: program's run time superates 20 minutes) 
