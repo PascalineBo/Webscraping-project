@@ -1,214 +1,200 @@
+
 import requests
 from bs4 import BeautifulSoup
 import csv
 import re
 
-# page to scrape's url:
-url_site = "http://books.toscrape.com"
-def Get_categories_urls(url_site):
-	reponse = requests.get(url_site)
-	page = reponse.content
 
 
-	# transforme (parse) le HTML en objet BeautifulSoup
-	soup = BeautifulSoup(page, "html.parser")
+def page_parser(url):
+	"""retrieves and parses code from url page,
+	using BeautifulSoup"""
+	response = requests.get(url)
+	page_html_code = response.content
 
-	#extract category urls from a tags:
-	a_href_url_category = soup.findAll(href=re.compile("^catalogue/category/books/"))
-	list_href_category= []
+	# transforms (parses) HTML into BeautifulSoup object:
+	soup = BeautifulSoup(page_html_code, "html.parser")
+	return soup
+
+
+def get_categories_urls(category_url):
+	"""
+	:param category_url: page's category url
+	:return: categories'urls from http://books.toscrape.com,
+	in a list
+	"""
+
+	soup = page_parser(category_url)
+	# extracts category's urls from "a" tags:
+	a_href_url_category = soup.findAll(
+		href=re.compile("^catalogue/category/books/"))  # beautiful
+	# soup Resultset object
+
+	list_href_category = []  # list to store all categories' urls
+
 	for a in a_href_url_category:
-		href_url_category=a['href']
-		list_href_category.append('http://books.toscrape.com/'+href_url_category)
-	return(list_href_category)
-
-list_href_category_to_use = Get_categories_urls(url_site)
-#récupération des liens des livres d'une category d'une page:
-
-
-def File_creation_by_category(url2):
-	#function: get category name from URL:
-
-	def category_name(url2):
-		
-		split_url = url2.split('/')
-		catgory_name = split_url[6]
-		return catgory_name
+		href_url_category = a['href']  # gives the extension
+		# of the urls in Beautiful Soup Resultset object
+		list_href_category.append(
+			'http://books.toscrape.com/'+href_url_category)  # rebuilds
+		# url's string and adds it to categories' urls list
+	return list_href_category
 
 
-	def Browse_category_all_pages(url2):
-	#récupération des liens de toutes les pages d'une catégorie:
+def category_name(url_category):
+	"""get category name from URL:"""
+	split_url = url_category.split('/')
+	categorys_name = split_url[6]
+	return categorys_name
 
 
-		reponse3 = requests.get(url2)
+def category_all_pages_list(url_category_page1):
+	"""get urls from all pages for one category,
+	stores them in a list"""
 
-		listurlspercategory=[]
+	# reponse3 = requests.get(url_category1)
 
-		listurlspercategory.append(url2)
+	list_urls_per_category=[]
 
-		listindex = [1,2,3,4,5,6,7,8]
-		i=1
+	list_urls_per_category.append(url_category_page1)
 
-		while i in listindex:
-			i+=1
-			url3 = url2.replace('index',"page-"+str(i))
-			reponse4 = requests.get(url3)
-			if reponse4.ok:
-				listurlspercategory.append(url3)
+	# listindex = [1,2,3,4,5,6,7,8]
+	i=1
 
-		return(listurlspercategory)
+	while i in range(1, 10):
+		i += 1
+		url_next = url_category_page1.replace(
+			'index', "page-"+str(i))
+		response4 = requests.get(url_next)
+		if response4.ok:
+			list_urls_per_category.append(url_next)
 
-	#je crée une liste pour stocker tous les url de livres:
-	url_livres_contenu = []
-
-	#je crée une fonction pour récupérer les livres d'une page html category:
-	def recupererlivresdunepagecategory(j):
-		#lien de la page category
-		url = j
+	return list_urls_per_category
 
 
-		reponse2 = requests.get(url)
-		page2 = reponse2.content
+def get_all_books_from_category(category_url):
+	"""get a list of books urls on each category page;
+	:param category_url: category's page url
+	"""
+	page_books_urls = []  # list to store all books urls
+
+	soup = page_parser(category_url)
+	books_urls = soup.find_all("h3")  # get all book's urls
+	# of the category listed in page's html code
+
+	for h3 in books_urls:
+		a_tag = h3.find('a')
+		book_url = a_tag['href']
+		clean_book_url = book_url.replace('../../../', "")
+		# rebuilds a string with full book's page url
+		page_books_urls.append(
+			'http://books.toscrape.com/catalogue/' +
+			clean_book_url)  # appends full book's url
+		# to the list
+	return page_books_urls
 
 
-		soup = BeautifulSoup(page2, "html.parser")
-
-		#je vais chercher tous les url de livres de la catégorie:
-
-		url_livres = soup.find_all("h3")
-		for h3 in url_livres:
-			a = h3.find('a')
-			lienlivre = a['href']
-
-		# je remets l'adresse url au complet:
-			lienlivre2 = lienlivre.replace('../../../',"")
-
-		#tout en ajoutant à la liste finale:
-			url_livres_contenu.append('http://books.toscrape.com/catalogue/'+lienlivre2)
-		
-
-
-	#remplissage de [url_livres_contenu] avec les url de tous les livres d'une même catégorie, même s'il y a plusieurs pages pour cette catégorie:
-	listurlspercategory = Browse_category_all_pages(url2)
-	n=0
-	j=listurlspercategory[0]
-	recupererlivresdunepagecategory(j)
-	while n < (len(listurlspercategory)-1):
-		n+=1
-		j=listurlspercategory[n]
-		recupererlivresdunepagecategory(j)
+def book_details_urls(url_category):
+	"""for one category, returns a list of urls of all
+	the books from all the pages
+	:param url_category: url from the first page of a category"""
+	book_urls_list = []
+	list_urls_per_category = category_all_pages_list(url_category)
+	i = -1
+	while i in range(-1, (len(list_urls_per_category)-1)):
+		i += 1
+		url = list_urls_per_category[i]
+		page_books_urls = \
+			get_all_books_from_category(url)
+		book_urls_list += [*page_books_urls]  # concatenate lists of
+	# books for all pages of the category
+	return book_urls_list
 
 
-	#récupération des détails des livres d'une page de category et transfert dans un fichier csv - reste à faire: quand il y a plusieurs pages 
-
-	#j'utilise ci-dessous des listes pour ranger les données que je rapatrie, mais je me demande si un tuple ne serait pas préférable, au cas où la donnée manque sur une page? à suivres
-	colonnes = ['product_page_url','universal_ product_code', 'title','price_including_tax','price_excluding_tax','number_available','product_description','category','review_rating','image_url']
-
-	#get image_url: 
-	def get_img_url(url):
-		response_img = requests.get(url)
-		page_img = response_img.content
-
-
-		soup = BeautifulSoup(page_img, "html.parser")
-
-		img_tag = soup.find("img")
-		partial_img_url = img_tag['src']
-		img_url = ('http://books.toscrape.com'+(partial_img_url.replace('../..',"")))
-		return img_url
+def get_img_url(url):
+	"""get the url of the image of a book"""
+	soup = page_parser(url)
+	img_tag = soup.find("img")
+	partial_img_url = img_tag['src']
+	img_url = ('http://books.toscrape.com' + (
+		partial_img_url.replace('../..', "")))
+	return img_url
 
 
-	#je crée une fonction rapatriement de données d'un livre:
-	def detailslivre(x):
-		url = x
-		reponse = requests.get(url)
-		page = reponse.content
+def single_book_details(book_url):
+	"""get book details"""
+	soup = page_parser(book_url)
+
+	book_info = [book_url]  # values list to
+	# stash book details
+
+	# find UPC:
+	get_td = soup.find_all("td")  # get all  "td" data (text)
+	td_content_list = []
+	for content in get_td:
+		td_content_list.append(content.string)
+
+	book_info.append(td_content_list[0])  # stash UPC value
+
+	title = soup.find("h1")  # get book title
+
+	book_info.append(title.text)  # stash book title
+
+	book_info.append(td_content_list[3])  # add Price
+	# including Tax
+
+	book_info.append(td_content_list[2])  # add Price
+	# excluding Tax
+
+	book_info.append(td_content_list[5])  # add Number
+	# available
+
+	# add Product Description:
+	description = soup.find_all("p")
+	product_description = []
+	for desc in description:
+		product_description.append(desc.string)
+
+	book_info.append(product_description[3])
+
+	a_tags_list = soup.find_all("a")  # get all "a" tags
+	a_texts = []
+	for category in a_tags_list:
+		a_texts.append(category.string)
+
+	book_info.append(a_texts[3])  # add category
+
+	# add review rating:
+	paragraphs = soup.find_all("p")
+	p_texts = []
+	for classe in paragraphs:
+		p_texts.append(classe)
+
+	tag = paragraphs[2]
+	rating = tag['class']
+
+	book_info.append(rating[1] + " stars")  # add
+	# review rating
+
+	book_info.append(get_img_url(book_url))  # append img_url:
+	return book_info
 
 
-		# transforme (parse) le HTML en objet BeautifulSoup
-		soup = BeautifulSoup(page, "html.parser")
+def file_creation_by_category(url_category):
+	"""for each category, creates a csv file with books data"""
 
-		values = []
+	columns = ['product_page_url', 'universal_ product_code',
+			   'title', 'price_including_tax',
+			   'price_excluding_tax','number_available',
+			   'product_description','category',
+			   'review_rating','image_url']
 
-		#récupération URL
-		values.append(url)
-
-		# récupération UPC
-		# pour cela, d'abord: récupération de toutes les td (valeurs)
-		valeurs = soup.find_all("td")
-		valeurs_contenu = []
-		for contenu in valeurs:
-			valeurs_contenu.append(contenu.string)
-
-		#puis:
-		values.append(valeurs_contenu[0])
-
-		# recupération title
-		title = soup.find("h1")
-		
-		values.append(title.text)
-
-		# add Price including Tax: problème d'encodage dans Excel mais pas dans Notes
-		b = valeurs_contenu[3]
-		values.append(b)
-
-		# add Price excluding Tax
-		values.append(valeurs_contenu[2])
-
-		# add Number available
-		values.append(valeurs_contenu[5])
-
-		#add Product Description
-		description = soup.find_all("p")
-		product_description = []
-		for desc in description:
-			product_description.append(desc.string)
-
-		values.append(product_description[3])
-
-
-		#add category
-		# pour cela, d'abord: récupération de tous les a
-		navigateur_a = soup.find_all("a")
-		a_textes = []
-		for category in navigateur_a:
-			a_textes.append(category.string)
-
-		#puis:
-		values.append(a_textes[3])
-
-		#add review rating:
-		paragraphes = soup.find_all("p")
-		p_textes = []
-		for classe in paragraphes:
-			p_textes.append(paragraphes)
-
-		tag = paragraphes[2]
-		rating = tag['class']
-
-		values.append(rating[1]+" stars")
-
-		#append img_url:
-
-		values.append(get_img_url(url))
-		return values
-
-
-	# création du fichier data.csv
-	en_tete = ['caracteristique_produit', 'contenu']
-	with open(category_name(url2)+'.csv', 'w',encoding='utf-8') as fichier_csv:
+	en_tete = ['product_data', 'content']
+	with open(category_name(url_category)+'.csv', 'w',encoding='utf-8') as fichier_csv:
 		writer = csv.writer(fichier_csv, delimiter=',')
-		writer.writerow(colonnes)
-	#je demande au fichier d'ecrire les detail de chaque livre pour tous les livres présents dans url_livres_contenu
-		for y in url_livres_contenu:
-			detailslivre(y)
-			writer.writerow(detailslivre(y))
-
-index_url2 = 0
-url2 = list_href_category_to_use[index_url2]
-File_creation_by_category(url2)
-	
-while index_url2 in range(0,51):
-	index_url2+=1
-	url2 = list_href_category_to_use[index_url2]
-	File_creation_by_category(url2)
-	
+		writer.writerow(columns)
+		books_details_urls = book_details_urls(url_category)  # list
+		# of all books'urls for one category
+		for url in books_details_urls:
+			writer.writerow(single_book_details(url))  # write
+			# all the info for a book, on a row in the file
