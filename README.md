@@ -40,11 +40,11 @@ Install Python : download **[Python 3.10](https://www.python.org/downloads/)**
 - answer the question: key in `Data`or `Pics`
 - the file main.py allows you to run the script; 
   
-  the file projet2g.py contains the code necessary to srape data into csv files; 
+  the file projet2g.py contains the necessary code to srape data into csv files; 
   
-  the file projet2image.py contains the code necessary to scrape pictures from the website.
+  the file projet2image.py contains the necessary code to scrape pictures from the website.
 </li>
-  <li>see all the data you scraped in csv output files in your folder or 
-  the scraped pictures in categories' directories</li>
-(Note: program's run time superates 20 minutes) 
+  <li>see all your scraped data in csv output files in your folder or 
+  all the scraped pictures in categories' directories</li>
+(Note: program's run time superates 20 minutes for csv files, 10 minutes for pictures) 
   </ol>
